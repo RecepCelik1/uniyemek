@@ -1,8 +1,8 @@
 const express = require('express');
-const contentPanel = require('../service/adminPanel/contentPanel');
+const contentPanel = require('../service/userPanel');
 const isAuth = require('../middleware/isAuth');
 
-class AdminPanelController {
+class UserPanelController {
     constructor() {
         this.contentService = new contentPanel();
         this.router = express.Router();
@@ -10,62 +10,17 @@ class AdminPanelController {
     }
 
     initializeRoutes() {
-        //this.router.post('/new-city', isAuth, this.createNewCity.bind(this));
-        this.router.post('/new-university', isAuth, this.createNewUniversity.bind(this));
-        this.router.post('/new-mealcart', isAuth, this.createNewMealCart.bind(this));
-        this.router.post('/new-comment', isAuth, this.createNewComment.bind(this));
-        this.router.post('/like-a-cart', isAuth, this.likeCart.bind(this));
-        this.router.post('/dislike-a-cart', isAuth, this.dislikeCart.bind(this));
-        this.router.post('/like-a-comment', isAuth, this.likeComment.bind(this));
-        this.router.post('/dislike-a-comment', isAuth, this.dislikeComment.bind(this));
-        this.router.post('/delete-comment', isAuth, this.deleteComment.bind(this));
-        this.router.post('/update-comment', isAuth, this.updateComment.bind(this));
-        this.router.post('/kick-user', isAuth, this.kickUser.bind(this));
-
-    }
-
-    async createNewCity(req, res, next) {
-        try {
-            const sessionToken = req.cookies.sessionToken;
-            const cityData = req.body.cityData
-            const newCity = await this.contentService.createCity(sessionToken, cityData);
-            res.status(201).json({
-                success: true,
-                data: newCity
-            });
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    async createNewUniversity(req, res, next) {
-        try {
-            const sessionToken = req.cookies.sessionToken;
-            const universityData = req.body.universityData
-            const newUniversity = await this.contentService.createUniversity(sessionToken, universityData);
-            res.status(201).json({
-                success: true,
-                data: newUniversity
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async createNewMealCart (req, res, next) {
-        try {
-            const sessionToken = req.cookies.sessionToken;
-            const mealCartData = req.body.mealCartData;
-            const universityId = req.body.universityId;
-
-            const newMealCart = await this.contentService.createMealCart(sessionToken, mealCartData, universityId);
-            res.status(201).json({
-                success: true,
-                data: newMealCart
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        this.router.post('/new-comment', isAuth, this.createNewComment.bind(this)); // confirmed
+        this.router.post('/like-cart', isAuth, this.likeCart.bind(this)); // confirmed
+        this.router.post('/dislike-cart', isAuth, this.dislikeCart.bind(this)); // confirmed
+        this.router.post('/like-comment', isAuth, this.likeComment.bind(this)); // confirmed
+        this.router.post('/dislike-comment', isAuth, this.dislikeComment.bind(this)); // confirmed
+        this.router.post('/delete-comment', isAuth, this.deleteComment.bind(this)); // confirmed
+        this.router.post('/update-comment', isAuth, this.updateComment.bind(this)); // confirmed
+        this.router.post('/update-profile', isAuth, this.updateProfile.bind(this));
+        //this.router.get('/get-cities', this.getCities.bind(this));
+        this.router.get('/get-universities', this.getUniversities.bind(this));
+        this.router.post('/get-university', this.getUniversity.bind(this));
     }
 
     async createNewComment (req, res, next) {
@@ -88,7 +43,6 @@ class AdminPanelController {
         try {
             const sessionToken = req.cookies.sessionToken;
             const cartId = req.body.cartId;
-
             const likeCart = await this.contentService.handleCartLikeButton(sessionToken, cartId);
             res.status(201).json({
                 success: true,
@@ -174,25 +128,61 @@ class AdminPanelController {
         }
     }
 
-    async kickUser (req, res, next) {
+    async getCities (req, res, next) {
         try {
-            const sessionToken = req.cookies.sessionToken;
-            const userId = req.body.userId;
-
-            const kickUser = await this.contentService.kickUser(sessionToken, userId);
+            const cities = await this.contentService.getCities();
             res.status(200).json({
                 success: true,
-                data: kickUser
+                data: cities
             });
         } catch (error) {
             console.log(error);
         }
     }
-    
+
+    async getUniversities (req, res, next) {
+        try {
+            const universities = await this.contentService.getUniversities();
+            res.status(200).json({
+                success: true,
+                data: universities
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getUniversity (req, res, next) {
+        try {
+            const universityId = req.body.universityId;
+            const university = await this.contentService.getUniversity(universityId);
+            res.status(200).json({
+                success: true,
+                data: university
+            });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async updateProfile (req, res, next) {
+        try {
+            const sessionToken = req.cookies.sessionToken;
+            const updateData = req.body.updateData
+            const updateProfile = await this.contentService.updateProfile(sessionToken, updateData);
+            res.status(200).json({
+                success: true,
+                data: updateProfile
+            });
+        } catch (error) {   
+            next(error)
+        }
+    }
+
     getRouter() {
         return this.router;
     }
 
 }
 
-module.exports = new AdminPanelController().getRouter();
+module.exports = new UserPanelController().getRouter();

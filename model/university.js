@@ -5,13 +5,13 @@ const universityModel = new mongoose.Schema({
         type: String,
         required: true
     },
-    city: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "City"
-    },
     mealCarts: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "Mealcart"
+    },
+    logo: {
+        type: String,
+        default: ""
     }
 });
 

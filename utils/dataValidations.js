@@ -21,6 +21,15 @@ const schemas = {
             .pattern(/[\W_]/, "special character")
             .required(),
     }),
+    commentSchema: joi.string(),
+    profileUpdateSchema: joi.object({
+        name: joi.string().allow('', null),
+        surname: joi.string().allow('', null),
+        nickname: joi.string().allow('', null),
+        city: joi.string().allow('', null),
+        university: joi.string().allow('', null),
+        department: joi.string().allow('', null)
+    })    
 }
 
 

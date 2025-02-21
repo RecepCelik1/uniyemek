@@ -30,9 +30,11 @@ app.use(cors(corsOptions));
 
 const userAuthController = require('./controller/userAuthController.js');
 const adminPanelController = require('./controller/adminPanelController.js')
+const userPanelController = require('./controller/userPanelController.js');
 
 app.use('/api/v1/user-auth', userAuthController);
 app.use('/api/v1/admin-panel', adminPanelController);
+app.use('/api/v1/user-panel', userPanelController);
 
 app.use(ErrorHandler);
 

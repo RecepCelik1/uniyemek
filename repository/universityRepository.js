@@ -42,6 +42,10 @@ class universityRepository {
     async deleteMany (filter) {
         return await this.model.deleteMany(filter);
     }
+
+    async getMealCarts (universityId) {
+        return await this.model.findById(universityId).populate("mealCarts");
+    }
 }
 
 module.exports = new universityRepository(universityModel);

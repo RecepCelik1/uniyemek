@@ -98,7 +98,7 @@ module.exports = (err, req, res, next) => {
 
     // Error Type Determination
     const errorDetails = errorMessages[err.message] || {
-        message: "We realize that you have encountered an unexpected error. We apologize for the inconvenience. Our developers have been notified and will contact you as soon as possible.",
+        message: "Internal Server Error",
         statusCode: 500,
     };
 

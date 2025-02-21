@@ -15,7 +15,7 @@ const userModel = new mongoose.Schema({
         type: String,
         required: true,
     },
-    nick: {
+    nickname: {
         type: String,
     },
     city: {
@@ -24,7 +24,7 @@ const userModel = new mongoose.Schema({
     university: {
         type: String,
     },
-    departmant: {
+    department: {
         type: String,
     },
     email: {
@@ -39,6 +39,9 @@ const userModel = new mongoose.Schema({
     isBanned: {
         type: Boolean,
         defaul: false
+    },
+    avatar: {
+        type: String
     }
 }, baseOptions);
 

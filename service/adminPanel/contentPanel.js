@@ -21,14 +21,7 @@ class contentPanel extends adminPanel{
 
     async createUniversity (sessionToken, universityData) {
         const admin = await this.checkUserAuthority(sessionToken);
-        const [newUniversity, city] = await Promise.all([
-            universityRepository.create(universityData),
-            cityRepository.findById(universityData.city)  
-        ]);
-        if(!city){
-            throw new Error("CityNotFound")
-        }
-        city.universities.push(newUniversity._id); await city.save();
+        const newUniversity = await universityRepository.create(universityData);
         return newUniversity;
     }
 
@@ -225,6 +218,8 @@ class contentPanel extends adminPanel{
         const kickUser = await this.userRepos.updateOne(userId, { isBanned: true });
         return kickUser;
     }
+
+    //TO DO: ADD AN CART RESET FUNCTİON
 
 }
 

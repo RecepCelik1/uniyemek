@@ -132,12 +132,12 @@ class UserAuthService {
                 name: given_name,
                 surname: family_name,
                 email,
+                avatar: picture,
                 termsAcceptedAt: Date.now(),
                 role: "Common",
                 type: "Google"
         });
-        const newUserObj = newUser.toObject();
-        return newUserObj;
+        return newUser;;
     }
 
     async resetMailSender(email) {

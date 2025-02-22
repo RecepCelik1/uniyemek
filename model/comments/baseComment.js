@@ -11,6 +11,11 @@ const commentModel = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    senderNick: {type: String},
+    mealCartId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Mealcart"
+    },
     comment: {
         type: String,
         required: true

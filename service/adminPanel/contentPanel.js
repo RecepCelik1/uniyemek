@@ -237,6 +237,18 @@ class contentPanel extends adminPanel{
         return kickUser;
     }
 
+    async deleteMealCart (sessionToken, cartId) {
+        const admin = await this.checkUserAuthority(sessionToken);
+        const deletedCart = await mealCartRepository.deleteOne(cartId);
+        return deletedCart;
+    }
+
+    async deleteAllMealCarts (sessionToken, universityId) {
+        const admin = await this.checkUserAuthority(sessionToken);
+        const deleteAll = await mealCartRepository.deleteMany({universityId: universityId});
+        return deleteAll;
+    }
+
     //TO DO: ADD AN CART RESET FUNCTİON
 
 }

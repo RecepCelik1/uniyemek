@@ -44,6 +44,10 @@ class commentRepository {
     async deleteMany (filter) {
         return await this.model.deleteMany(filter);
     }
+
+    async getCartCommentWithReplies (mealCartId){
+        return await fatherComment.find({mealCartId}).populate("childComments");
+    }
 }
 
 module.exports = new commentRepository(commentModel);

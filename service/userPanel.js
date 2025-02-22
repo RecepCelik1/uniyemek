@@ -16,15 +16,16 @@ class userPanelService {
         this.userAuth = new userAuthService()
     }
     
-    async createComment (sessionToken, commentData, mealCartId) {
+    async createComment (sessionToken, commentData) {
         if(!commentData.comment){
             throw new Error('InvalidParameter');
         }
         const user = await this.userAuth.validateSessionToken(sessionToken);
         const purifiedComment = purifyInput(commentData.comment);
+
         if(commentData.fatherComment){
             const [newComment, fatherComment] = await Promise.all([
-                commentRepository.create({ comment: purifiedComment, type: "ChildComment", sender: user._id }),
+                commentRepository.create({ comment: purifiedComment, type: "ChildComment", sender: user._id, senderNick: user.nickname, mealCartId: commentData.mealCartId }),
                 commentRepository.findById(commentData.fatherComment) 
             ]);
             if(!fatherComment){
@@ -34,8 +35,8 @@ class userPanelService {
             return newComment;
         }
         const [newComment, mealCart] = await Promise.all([
-            commentRepository.create({comment: purifiedComment, type: "FatherComment", sender: user._id}),
-            mealCartRepository.findById(mealCartId) 
+            commentRepository.create({comment: purifiedComment, type: "FatherComment", sender: user._id, senderNick: user.nickname, mealCartId: commentData.mealCartId}),
+            mealCartRepository.findById(commentData.mealCartId) 
         ]);
         if(!mealCart){
             throw new Error("ItemNotFound");
@@ -189,11 +190,21 @@ class userPanelService {
         if(!comment){
             throw new Error("ItemNotFound");
         }
+        if(user.role === "Admin"){
+            await Promise.all([
+                comment.deleteOne(),
+                mealCartRepository.updateOne(comment.mealCartId, { $pull: { comments: comment._id } })
+              ]);
+              return comment;
+        }
         if(user._id.toString() !== comment.sender.toString()){
             throw new Error("UnauthorizedAccess");
         }
-        await comment.deleteOne();
-        return comment;
+        await Promise.all([
+            comment.deleteOne(),
+            mealCartRepository.updateOne(comment.mealCartId, { $pull: { comments: comment._id } })
+          ]);
+          return comment;
     }
 
     async updateComment (sessionToken, commentData) {
@@ -239,6 +250,14 @@ class userPanelService {
         }
         const user = await this.userRepos.updateOne(decodedToken.userId, updateData);
         return user;
+    }
+
+    async getMealCartComments (cartId) {
+        if(!cartId) {
+            throw new Error("InvalidParameter");
+        }
+        const cartComments = await commentRepository.getCartCommentWithReplies(cartId);
+        return cartComments;
     }
 
 }

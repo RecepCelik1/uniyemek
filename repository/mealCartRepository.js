@@ -51,6 +51,12 @@ class mealCartRepository {
         return await this.model.bulkWrite(operations);
     }
 
+    async getMealCartWithComments (cartId) {
+        return await this.model.findById(cartId)
+        .populate("comments")
+        .populate("comments.childComments");
+    }
+
 }
 
 module.exports = new mealCartRepository(mealCartModel);

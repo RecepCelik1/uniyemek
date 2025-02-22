@@ -13,15 +13,16 @@ class AdminPanelController {
         //this.router.post('/new-city', isAuth, this.createNewCity.bind(this));
         this.router.post('/new-university', isAuth, this.createNewUniversity.bind(this));
         this.router.post('/new-mealcart', isAuth, this.createNewMealCart.bind(this));
-        this.router.post('/new-comment', isAuth, this.createNewComment.bind(this));
+/*         this.router.post('/new-comment', isAuth, this.createNewComment.bind(this));
         this.router.post('/like-a-cart', isAuth, this.likeCart.bind(this));
         this.router.post('/dislike-a-cart', isAuth, this.dislikeCart.bind(this));
         this.router.post('/like-a-comment', isAuth, this.likeComment.bind(this));
         this.router.post('/dislike-a-comment', isAuth, this.dislikeComment.bind(this));
         this.router.post('/delete-comment', isAuth, this.deleteComment.bind(this));
         this.router.post('/update-comment', isAuth, this.updateComment.bind(this));
-        this.router.post('/kick-user', isAuth, this.kickUser.bind(this));
-
+ */     this.router.post('/kick-user', isAuth, this.kickUser.bind(this));
+        this.router.post('/delete-mealcart', isAuth, this.deleteMealCart.bind(this));
+        this.router.post('/delete-all-mealcarts', isAuth, this.deleteAllMealCarts.bind(this));
     }
 
     async createNewCity(req, res, next) {
@@ -188,6 +189,34 @@ class AdminPanelController {
         }
     }
     
+    async deleteMealCart (req, res, next) {
+        try {
+            const sessionToken = req.cookies.sessionToken;
+            const cartId = req.body.cartId;
+            const deletedCart = await this.contentService.deleteMealCart(sessionToken, cartId);
+            res.status(200).json({
+                success: true,
+                data: deletedCart
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async deleteAllMealCarts (req, res, next) {
+        try {
+            const sessionToken = req.cookies.sessionToken;
+            const universityId = req.body.universityId;
+            const deletedCarts = await this.contentService.deleteAllMealCarts(sessionToken, universityId);
+            res.status(200).json({
+                success: true,
+                data: deletedCarts
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     getRouter() {
         return this.router;
     }

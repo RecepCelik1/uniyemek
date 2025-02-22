@@ -21,15 +21,15 @@ class UserPanelController {
         //this.router.get('/get-cities', this.getCities.bind(this));
         this.router.get('/get-universities', this.getUniversities.bind(this));
         this.router.post('/get-university', this.getUniversity.bind(this));
+        this.router.post('/get-mealcart-comments', this.getMealCartComments.bind(this));
     }
 
     async createNewComment (req, res, next) {
         try {
             const sessionToken = req.cookies.sessionToken;
             const commentData = req.body.commentData;
-            const mealCartId = req.body.mealCartId;
 
-            const newComment = await this.contentService.createComment(sessionToken, commentData, mealCartId);
+            const newComment = await this.contentService.createComment(sessionToken, commentData);
             res.status(201).json({
                 success: true,
                 data: newComment
@@ -102,11 +102,10 @@ class UserPanelController {
         try {
             const sessionToken = req.cookies.sessionToken;
             const commentId = req.body.commentId;
-
             const deleteComment = await this.contentService.deleteComment(sessionToken, commentId);
             res.status(200).json({
                 success: true,
-                data: {}
+                data: deleteComment
             });
         } catch (error) {
             next(error);
@@ -176,6 +175,19 @@ class UserPanelController {
             });
         } catch (error) {   
             next(error)
+        }
+    }
+
+    async getMealCartComments (req, res, next) {
+        try {
+            const cartId = req.body.cartId
+            const cartComments = await this.contentService.getMealCartComments(cartId);
+            res.status(200).json({
+                success: true,
+                data: cartComments
+            });
+        } catch (error) {   
+            console.log(error)
         }
     }
 

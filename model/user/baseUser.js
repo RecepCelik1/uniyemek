@@ -38,10 +38,14 @@ const userModel = new mongoose.Schema({
     },
     isBanned: {
         type: Boolean,
-        defaul: false
+        default: false
     },
     avatar: {
         type: String
+    },
+    password: {
+        type: String,
+        select: false
     }
 }, baseOptions);
 

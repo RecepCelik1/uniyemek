@@ -39,6 +39,10 @@ const mealcartModel = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: "Comment",
         default: []
+    },
+    universityId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "university"
     }
 });
 

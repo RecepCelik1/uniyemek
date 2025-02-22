@@ -35,7 +35,7 @@ class UserPanelController {
                 data: newComment
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -49,7 +49,7 @@ class UserPanelController {
                 data: likeCart
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -64,7 +64,7 @@ class UserPanelController {
                 data: dislike
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -79,7 +79,7 @@ class UserPanelController {
                 data: like
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -94,7 +94,7 @@ class UserPanelController {
                 data: dislike
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -109,7 +109,7 @@ class UserPanelController {
                 data: {}
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -124,7 +124,7 @@ class UserPanelController {
                 data: updateComment
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -136,7 +136,7 @@ class UserPanelController {
                 data: cities
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -148,7 +148,7 @@ class UserPanelController {
                 data: universities
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 

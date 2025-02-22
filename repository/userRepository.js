@@ -28,7 +28,12 @@ class userRepository {
     }
 
     async updateOne(id, data) {
-        return this.model.findByIdAndUpdate(id, data, { new: true });
+        const updatedUser = await this.model.findOneAndUpdate(
+            { _id: id }, 
+            data, 
+            { new: true }
+        );
+        return updatedUser
     }
 
     async updateMany (filter, updateDetails) {

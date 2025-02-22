@@ -12,6 +12,9 @@ const universityModel = new mongoose.Schema({
     logo: {
         type: String,
         default: ""
+    },
+    mealPrice: {
+        type: Number
     }
 });
 

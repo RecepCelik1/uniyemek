@@ -26,7 +26,7 @@ class UserAuthController {
             const newUser = await this.authService.registerUser(req.body);
             this.authService.sessionTokenSender(res, newUser);
         } catch (error) {
-            console.log(error)
+            next(error);
         }
     }
 
@@ -55,7 +55,7 @@ class UserAuthController {
             const googleUser = await this.authService.loginWithGoogle(googleTokenInfo);
             this.authService.sessionTokenSender(res, googleUser);
         } catch (error) {
-            console.log(error)
+            next(error);
         }
     }
 

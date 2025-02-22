@@ -48,7 +48,7 @@ class AdminPanelController {
                 data: newUniversity
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -56,15 +56,14 @@ class AdminPanelController {
         try {
             const sessionToken = req.cookies.sessionToken;
             const mealCartData = req.body.mealCartData;
-            const universityId = req.body.universityId;
 
-            const newMealCart = await this.contentService.createMealCart(sessionToken, mealCartData, universityId);
+            const newMealCart = await this.contentService.createMealCart(sessionToken, mealCartData);
             res.status(201).json({
                 success: true,
                 data: newMealCart
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -80,7 +79,7 @@ class AdminPanelController {
                 data: newComment
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -95,7 +94,7 @@ class AdminPanelController {
                 data: likeCart
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -110,7 +109,7 @@ class AdminPanelController {
                 data: dislike
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -125,7 +124,7 @@ class AdminPanelController {
                 data: like
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -140,7 +139,7 @@ class AdminPanelController {
                 data: dislike
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -155,7 +154,7 @@ class AdminPanelController {
                 data: {}
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -170,7 +169,7 @@ class AdminPanelController {
                 data: updateComment
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -185,7 +184,7 @@ class AdminPanelController {
                 data: kickUser
             });
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
     

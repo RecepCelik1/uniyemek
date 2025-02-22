@@ -7,10 +7,6 @@ const adminModel = baseModel.discriminator("Admin", new mongoose.Schema({
         default: "Admin",
         immutable: true
     },
-    password: {
-        type: String,
-        select: false
-    }
 }));
 
 module.exports = adminModel;

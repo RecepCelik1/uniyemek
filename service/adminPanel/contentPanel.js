@@ -25,11 +25,11 @@ class contentPanel extends adminPanel{
         return newUniversity;
     }
 
-    async createMealCart (sessionToken, mealCartData, universityId) {
+    async createMealCart (sessionToken, mealCartData) {
         const admin = await this.checkUserAuthority(sessionToken);
         const [newMealCart, university] = await Promise.all([
             mealCartRepository.create(mealCartData),
-            universityRepository.findById(universityId)                   
+            universityRepository.findById(mealCartData.universityId)                   
         ]);
         if(!university){
             throw new Error("ItemNotFound");

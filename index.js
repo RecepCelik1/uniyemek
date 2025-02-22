@@ -19,7 +19,7 @@ const corsOptions = {
     origin: ["https://uniyemek-front.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "set-cookie"],
     exposedHeaders: ["set-cookie"]
 };
 

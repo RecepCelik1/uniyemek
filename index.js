@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(xssProtectionMiddleWare);
 
 connetDb();
-res.setHeader("Vary", "Origin");
 const corsOptions = {
     origin: ["https://uniyemek-front.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],

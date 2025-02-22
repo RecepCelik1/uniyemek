@@ -9,7 +9,9 @@ const checkIsAuth = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error)
-        logOutResponse(res);
+        res.status(200).json({
+            data: error
+        });
     }
 };
 

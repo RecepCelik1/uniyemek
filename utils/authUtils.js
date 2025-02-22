@@ -47,10 +47,11 @@ const sendSessionToken = (res, token, expiresInDays, statusCode, user) => {
 const logOutResponse = (res) => {
     const defaultOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        expires: new Date(0)
-    }
+        secure: true,
+        sameSite: 'none',
+        expires,
+        path: '/'
+    };
     return res.status(200)
         .cookie('sessionToken', null, defaultOptions)
         .json({

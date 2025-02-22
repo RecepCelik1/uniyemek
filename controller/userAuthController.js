@@ -62,7 +62,6 @@ class UserAuthController {
     async validateSessionToken(req, res) {
         try {
             const sessionToken = req.cookies.sessionToken;
-            console.log(sessionToken);
             const user = await this.authService.validateSessionToken(sessionToken);
             res.status(200).json({
                 success: true,

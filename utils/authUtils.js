@@ -32,9 +32,10 @@ const sendSessionToken = (res, token, expiresInDays, statusCode, user) => {
 
     const defaultOptions = {
         httpOnly: true,
-        //secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'none',
-        expires
+        expires,
+        path: '/'
     };
 
     res.status(statusCode).cookie('sessionToken', token, defaultOptions).json({

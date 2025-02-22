@@ -49,9 +49,9 @@ const logOutResponse = (res) => {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        expires,
+        expires: new Date(0),
         path: '/'
-    };
+    }
     return res.status(200)
         .cookie('sessionToken', null, defaultOptions)
         .json({

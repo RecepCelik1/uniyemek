@@ -1,16 +1,18 @@
 const { logOutResponse, verifyToken } = require('../utils/authUtils');
 
 const checkIsAuth = async (req, res, next) => {
+    let sessionToken;
+    let decodedToken;
     try {
-        const sessionToken = req.cookies.sessionToken;
-        console.log(sessionToken);
-        const decodedToken = verifyToken(sessionToken);
+        sessionToken = req.cookies.sessionToken;
+        decodedToken = verifyToken(sessionToken);
         req.user = decodedToken;
         next();
     } catch (error) {
         console.log(error)
         res.status(200).json({
-            data: error
+            sessionToken,
+            decodedToken
         });
     }
 };

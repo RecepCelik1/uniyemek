@@ -63,17 +63,14 @@ class UserAuthController {
         try {
             const sessionToken = req.cookies.sessionToken;
             const user = await this.authService.validateSessionToken(sessionToken);
-            
-            if (!res.headersSent) {
-                res.status(200).json({
-                    success: true,
-                    data: user
-                });
-            }
+            res.status(200).json({
+                success: true,
+                data: user
+            });
         } catch (error) {
-            if (!res.headersSent) {
-                await this.authService.logOut(res);
-            }
+            res.status(200).json({
+                error: error
+            })
         }
     }
 

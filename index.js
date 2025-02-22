@@ -16,7 +16,7 @@ app.use(xssProtectionMiddleWare);
 connetDb();
 
 const corsOptions = {
-    origin: ["https://uniyemek-front-1vau9qbfx-receps-projects-65ef1262.vercel.app/"],
+    origin: ["https://uniyemek-front.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],

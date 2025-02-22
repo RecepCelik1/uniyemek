@@ -46,6 +46,11 @@ class mealCartRepository {
     async deleteMany (filter) {
         return await this.model.deleteMany(filter);
     }
+
+    async bulkWrite(operations) {
+        return await this.model.bulkWrite(operations);
+    }
+
 }
 
 module.exports = new mealCartRepository(mealCartModel);

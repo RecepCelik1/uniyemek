@@ -55,15 +55,15 @@ class AdminPanelController {
     async createNewMealCart (req, res, next) {
         try {
             const sessionToken = req.cookies.sessionToken;
-            const mealCartData = req.body.mealCartData;
-
-            const newMealCart = await this.contentService.createMealCart(sessionToken, mealCartData);
+            const mealCartDatas = req.body.mealCartDatas;
+            const universityId = req.body.universityId
+            const newCartIds = await this.contentService.createMealCarts(sessionToken, mealCartDatas, universityId);
             res.status(201).json({
                 success: true,
-                data: newMealCart
+                data: newCartIds
             });
         } catch (error) {
-            next(error);
+            console.log(error)
         }
     }
 

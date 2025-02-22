@@ -25,18 +25,36 @@ class contentPanel extends adminPanel{
         return newUniversity;
     }
 
-    async createMealCart (sessionToken, mealCartData) {
+    async createMealCarts(sessionToken, mealCartDatas, universityId) {
         const admin = await this.checkUserAuthority(sessionToken);
-        const [newMealCart, university] = await Promise.all([
-            mealCartRepository.create(mealCartData),
-            universityRepository.findById(mealCartData.universityId)                   
-        ]);
-        if(!university){
-            throw new Error("ItemNotFound");
+    
+        const chunkSize = 5;
+        const results = [];
+    
+        for (let i = 0; i < mealCartDatas.length; i += chunkSize) {
+            const chunk = mealCartDatas.slice(i, i + chunkSize);
+    
+            const bulkOperations = chunk.map(mealCart => ({
+                insertOne: { document: mealCart }
+            }));
+    
+            const bulkResult = await mealCartRepository.bulkWrite(bulkOperations);
+    
+            const mealCartIDs = Object.values(bulkResult.insertedIds);
+    
+            results.push(...mealCartIDs);
+    
+            await universityRepository.updateOne(
+                universityId, 
+                { $addToSet: { mealCarts: { $each: mealCartIDs } } }
+            );
         }
-        university.mealCarts.push(newMealCart._id); await university.save();
-        return newMealCart;
+    
+        return results;
     }
+    
+    
+    
     
     async createComment (sessionToken, commentData, mealCartId) {
         const admin = await this.checkUserAuthority(sessionToken)

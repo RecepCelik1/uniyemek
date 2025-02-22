@@ -32,10 +32,9 @@ const sendSessionToken = (res, token, expiresInDays, statusCode, user) => {
 
     const defaultOptions = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
         expires,
-        path: '/'
     };
 
     res.status(statusCode).cookie('sessionToken', token, defaultOptions).json({
@@ -47,10 +46,9 @@ const sendSessionToken = (res, token, expiresInDays, statusCode, user) => {
 const logOutResponse = (res) => {
     const defaultOptions = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
         expires: new Date(0),
-        path: '/'
     }
     return res.status(200)
         .cookie('sessionToken', null, defaultOptions)

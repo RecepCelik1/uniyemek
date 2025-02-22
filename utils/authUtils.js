@@ -32,7 +32,7 @@ const sendSessionToken = (res, token, expiresInDays, statusCode, user) => {
 
     const defaultOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        //secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         expires
     };

@@ -25,7 +25,7 @@ class userPanelService {
 
         if(commentData.fatherComment){
             const [newComment, fatherComment] = await Promise.all([
-                commentRepository.create({ comment: purifiedComment, type: "ChildComment", sender: user._id, senderNick: user.nickname, mealCartId: commentData.mealCartId }),
+                commentRepository.create({ comment: purifiedComment, type: "ChildComment", sender: user._id, senderNick: user.nickname, mealCartId: commentData.mealCartId, fatherComment: commentData.fatherComment }),
                 commentRepository.findById(commentData.fatherComment) 
             ]);
             if(!fatherComment){
@@ -204,7 +204,7 @@ class userPanelService {
             comment.deleteOne(),
             mealCartRepository.updateOne(comment.mealCartId, { $pull: { comments: comment._id } })
           ]);
-          return comment;
+        return comment;
     }
 
     async updateComment (sessionToken, commentData) {

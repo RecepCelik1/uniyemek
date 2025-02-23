@@ -10,7 +10,7 @@ class UserAuthController {
     }
 
     initializeRoutes() {
-        this.router.post('/register', this.register.bind(this)); //confirmed
+        //this.router.post('/register', this.register.bind(this)); //confirmed
         this.router.post('/login', this.login.bind(this)); //confirmed
         this.router.get('/google-oauth', this.googleOauth.bind(this)); // confirmed
         this.router.post('/google-oauth/callback', this.googleOauthCallback.bind(this)); // not tested yet since it requires client

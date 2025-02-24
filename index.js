@@ -26,6 +26,9 @@ app.use(cors(corsOptions));
 
 app.use(cors(corsOptions));
 
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "healthy" });
+});
 
 // Error handler
 

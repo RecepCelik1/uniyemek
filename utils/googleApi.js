@@ -5,7 +5,7 @@ const fetchTokenData = async (OAuthCode) => {
         code: OAuthCode,
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_ID_SECRET,
-        redirect_uri: "http://localhost:3000/google/callback",
+        redirect_uri: `${process.env.GOOGLE_CALLBACK_URL}`,
         grant_type: "authorization_code",
     }
     const response = await axios.post(process.env.GOOGLE_ACCESS_TOKEN_URL, data).catch((error) => {console.log(error)});
